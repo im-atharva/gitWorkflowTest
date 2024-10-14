@@ -21,14 +21,16 @@ jobs:
       - name: Install dependencies (if any)
         run: npm install
 
-      - name: Run green code converter
-        run: node ./gemin.js
-
-      - name: Create new branch and push changes
+      - name: Create new branch 
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git checkout -b "greencode-${{ github.sha }}"
+          
+      - name: Run green code converter
+        run: node ./gemin.js
+
+      - name: commit and push 
           git add .
           git commit -m "Converted code to green code" || echo "No changes to commit"
           git push origin "greencode-${{ github.sha }}"
