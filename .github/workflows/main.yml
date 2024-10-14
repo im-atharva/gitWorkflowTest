@@ -1,0 +1,34 @@
+name: Green Code Conversion
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  convert-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install dependencies (if any)
+        run: npm install
+
+      - name: Run green code converter
+        run: node ./gemin.js
+
+      - name: Create new branch and push changes
+        run: |
+          git checkout -b "greencode-${{ github.sha }}"
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Converted code to green code"
+          git push origin "greencode-${{ github.sha }}"
