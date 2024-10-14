@@ -15,8 +15,11 @@ async function convertToGreenCode() {
     // Send the prompt to the API and get the result
     const result = await model.generateContent(prompt);
 
-    // Output the optimized code
-    console.log(result.response.text());
+    try {
+      await fs.writeFile("one.cpp", result);
+    } catch (e) {
+      console.log("Error in writing file (gc)", e);
+    }
   } catch (error) {
     console.error("Error:", error);
   }
