@@ -14,8 +14,13 @@ async function convertToGreenCode() {
 
     const result = await model.generateContent(prompt);
 
-    await fs.writeFile("one.cpp", result.response.text());
-    console.log(result.response.text());
+    try {
+      await fs.writeFile("one.cpp", result.response.text());
+      console.log(result.response.text());
+    } catch (error) {
+      console.error("Error writing to file:", error);
+      process.exit(1); // Exit the process with a non-zero code to indicate failure
+    }
   } catch (error) {
     console.error("Error:", error);
   }
