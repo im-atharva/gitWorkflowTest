@@ -1,3 +1,5 @@
 .github/workflows/green-code.yml
 .yml
 .env
+
+node_modules
