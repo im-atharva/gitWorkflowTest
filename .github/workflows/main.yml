@@ -32,6 +32,11 @@ jobs:
       - name: Run green code converter
         run: node ./gemin.js
 
+      - name: Check for changes
+        run: |
+          git status
+          git diff
+
       - name: Commit and push 
         run: |
           git add .
