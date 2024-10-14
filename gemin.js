@@ -15,6 +15,7 @@ async function convertToGreenCode() {
     const result = await model.generateContent(prompt);
 
     await fs.writeFile("one.cpp", result.response.text());
+    console.log(result.response.text());
   } catch (error) {
     console.error("Error:", error);
   }
