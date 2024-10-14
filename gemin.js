@@ -12,14 +12,9 @@ async function convertToGreenCode() {
     // Create the prompt with the code content
     const prompt = `Convert the following code to a green/optimized code and please only provide me the code no extra text:\n\n${codeContent}`;
 
-    // Send the prompt to the API and get the result
     const result = await model.generateContent(prompt);
 
-    try {
-      await fs.writeFile("one.cpp", result.response.text());
-    } catch (e) {
-      console.log("Error in writing file (gc)", e);
-    }
+    await fs.writeFile("one.cpp", result.response.text());
   } catch (error) {
     console.error("Error:", error);
   }
