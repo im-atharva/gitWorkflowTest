@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import axios from "axios";
-const url = "https://2add-35-237-190-82.ngrok-free.app/optimize";
+const url = "https://93a9-34-125-70-224.ngrok-free.app/";
 
 async function convertToGreenCode() {
   try {
