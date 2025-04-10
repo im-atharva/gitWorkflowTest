@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emission Comparison Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Before vs After Emissions per File</h2>
+        <canvas id="emissionChart"></canvas>
+    </div>
+
+    <script>
+        async function fetchAndRender() {
+            const response = await fetch('./emissions_log.json');
+            const data = await response.json();
+
+            const fileEmissions = {};
+
+            data.forEach(entry => {
+                const emissions = entry.emissions;
+                for (let file in emissions) {
+                    const value = emissions[file];
+                    if (typeof value === 'number') {
+                        if (!fileEmissions[file]) fileEmissions[file] = [];
+                        fileEmissions[file].push(value);
+                    }
+                }
+            });
+
+            const labels = [];
+            const beforeData = [];
+            const afterData = [];
+
+            for (let file in fileEmissions) {
+                const values = fileEmissions[file];
+                labels.push(file);
+                beforeData.push(values[0] || 0);
+                afterData.push(values[values.length - 1] || 0);
+            }
+
+            const ctx = document.getElementById('emissionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Before',
+                            data: beforeData,
+                            backgroundColor: '#e63946'
+                        },
+                        {
+                            label: 'After',
+                            data: afterData,
+                            backgroundColor: '#2a9d8f'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: {
+                                    size: 14
+                                },
+                                padding: 20
+                            }
+                        },
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return `${context.dataset.label}: ${context.parsed.y.toFixed(6)} g eq CO₂`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'g eq CO₂ emissions',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                }
+                            },
+                            beginAtZero: true
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 30,
+                                autoSkip: false,
+                                padding: 10,
+                                font: {
+                                    size: 13
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        fetchAndRender();
+    </script>
+</body>
+
+</html>

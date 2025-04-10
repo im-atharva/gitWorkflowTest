@@ -1,0 +1,68 @@
+[
+	{
+		"repo_name": "emission_monitor",
+		"timestamp": "2024-11-11T07:47:15.634371",
+		"emissions": {}
+	},
+	{
+		"repo_name": "emission_monitor",
+		"timestamp": "2024-11-11T07:48:37.556088",
+		"emissions": {
+			"tests/test_sum_of_numbers.py": "Error calculating emissions for tests/test_sum_of_numbers.py: signal only works in main thread of the main interpreter"
+		}
+	},
+	{
+		"repo_name": "emission_monitor",
+		"timestamp": "2024-11-11T07:52:55.966729",
+		"emissions": {
+			"tests/test_sum_of_numbers.py": 0.005011
+		}
+	},
+	{
+		"repo_name": "emission_monitor",
+		"timestamp": "2024-11-11T07:54:13.480512",
+		"emissions": {}
+	},
+	{
+		"repo_name": "emission_monitor",
+		"timestamp": "2024-11-11T07:55:04.880068",
+		"emissions": {
+			"tests/test_sum_of_numbers.py": 0.00141
+		}
+	},
+	{
+		"repo_name": "emission_monitor",
+		"timestamp": "2024-11-11T07:59:19.342042",
+		"emissions": {
+			"tests/test_bubble_sort.py": 0.001282
+		}
+	},
+	{
+		"repo_name": "emission_monitor",
+		"timestamp": "2024-11-13T06:30:33.731986",
+		"emissions": {
+			"tests/test_bubble_sort.py": 0.00101
+		}
+	},
+	{
+		"repo_name": "sample_project_repo",
+		"timestamp": "2024-11-13T07:48:11.829174",
+		"emissions": {
+			"tests/test_first_n_numbers_sum.py": 0.001085
+		}
+	},
+	{
+		"repo_name": "sample_project_repo",
+		"timestamp": "2024-11-13T07:48:41.874082",
+		"emissions": {
+			"tests/test_first_n_numbers_sum.py": 0.001203
+		}
+	},
+	{
+		"repo_name": "sample_project_repo",
+		"timestamp": "2024-11-13T07:55:26.386925",
+		"emissions": {
+			"tests/test_first_n_numbers_sum.py": 0.001001
+		}
+	}
+]
