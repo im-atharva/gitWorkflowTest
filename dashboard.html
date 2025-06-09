@@ -5,32 +5,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Emission Comparison Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        html {
+            font-size: 16px;
+        }
+
+        @media (max-width: 600px) {
+            html {
+                font-size: 14px;
+            }
+        }
+
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f0f4f8;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
             margin: 0;
             padding: 2rem;
+            line-height: 1.6;
         }
 
         .container {
             max-width: 1000px;
             margin: auto;
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         }
 
         h2 {
             text-align: center;
-            color: #333;
-            margin-bottom: 2rem;
+            color: #222;
+            margin-bottom: 2.5rem;
+            font-size: 1.75rem;
         }
 
         canvas {
             max-width: 100%;
+        }
+
+        .note {
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 2rem;
         }
     </style>
 </head>
@@ -39,6 +59,7 @@
     <div class="container">
         <h2>Before vs After Emissions per File</h2>
         <canvas id="emissionChart"></canvas>
+        <p class="note">CO₂ emissions data in grams equivalent, computed per function</p>
     </div>
 
     <script>
@@ -46,15 +67,17 @@
             const response = await fetch('./emissions_log.json');
             const data = await response.json();
 
-            const fileEmissions = {};
+            const filePairs = {};
 
             data.forEach(entry => {
                 const emissions = entry.emissions;
-                for (let file in emissions) {
-                    const value = emissions[file];
-                    if (typeof value === 'number') {
-                        if (!fileEmissions[file]) fileEmissions[file] = [];
-                        fileEmissions[file].push(value);
+                for (let key in emissions) {
+                    const baseName = key.replace('_unoptimized', '').replace('_optimized', '');
+                    if (!filePairs[baseName]) filePairs[baseName] = {};
+                    if (key.includes('_unoptimized')) {
+                        filePairs[baseName].unoptimized = emissions[key];
+                    } else if (key.includes('_optimized')) {
+                        filePairs[baseName].optimized = emissions[key];
                     }
                 }
             });
@@ -63,11 +86,10 @@
             const beforeData = [];
             const afterData = [];
 
-            for (let file in fileEmissions) {
-                const values = fileEmissions[file];
+            for (let file in filePairs) {
                 labels.push(file);
-                beforeData.push(values[0] || 0);
-                afterData.push(values[values.length - 1] || 0);
+                beforeData.push(filePairs[file].unoptimized ?? 0);
+                afterData.push(filePairs[file].optimized ?? 0);
             }
 
             const ctx = document.getElementById('emissionChart').getContext('2d');
@@ -79,17 +101,25 @@
                         {
                             label: 'Before',
                             data: beforeData,
-                            backgroundColor: '#e63946'
+                            backgroundColor: '#ff4d4f',
+                            hoverBackgroundColor: '#ff7875'
                         },
                         {
                             label: 'After',
                             data: afterData,
-                            backgroundColor: '#2a9d8f'
+                            backgroundColor: '#00c49a',
+                            hoverBackgroundColor: '#5cf2cb'
                         }
                     ]
                 },
                 options: {
                     responsive: true,
+                    layout: {
+                        padding: {
+                            top: 20,
+                            bottom: 20
+                        }
+                    },
                     plugins: {
                         legend: {
                             labels: {
@@ -98,9 +128,6 @@
                                 },
                                 padding: 20
                             }
-                        },
-                        title: {
-                            display: false
                         },
                         tooltip: {
                             callbacks: {
@@ -112,6 +139,7 @@
                     },
                     scales: {
                         y: {
+                            beginAtZero: true,
                             title: {
                                 display: true,
                                 text: 'g eq CO₂ emissions',
@@ -119,17 +147,17 @@
                                     size: 16,
                                     weight: 'bold'
                                 }
-                            },
-                            beginAtZero: true
+                            }
                         },
                         x: {
                             ticks: {
-                                maxRotation: 45,
-                                minRotation: 30,
-                                autoSkip: false,
+                                maxRotation: 0,
+                                minRotation: 0,
+                                autoSkip: true,
                                 padding: 10,
                                 font: {
-                                    size: 13
+                                    size: 13,
+                                    weight: '500'
                                 }
                             }
                         }

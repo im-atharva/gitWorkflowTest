@@ -1,44 +1,62 @@
 [
   {
-    "repo_name": "emission_monitor",
-    "timestamp": "2024-11-11T07:52:55.966729",
+    "timestamp": "2025-06-09T20:48:45.903504",
     "emissions": {
-      "tests/test_sum_of_numbers.py": 0.005011
+      "fibonacci_unoptimized": 0.0010589804048301062
     }
   },
   {
-    "repo_name": "emission_monitor",
-    "timestamp": "2024-11-11T07:55:04.880068",
+    "timestamp": "2025-06-09T20:48:45.903504",
     "emissions": {
-      "tests/test_sum_of_numbers.py": 0.00141
+      "fibonacci_optimized": 0.0010136958493903701
     }
   },
   {
-    "repo_name": "emission_monitor",
-    "timestamp": "2024-11-11T07:59:19.342042",
+    "timestamp": "2025-06-09T20:48:45.903504",
     "emissions": {
-      "tests/test_bubble_sort.py": 0.001282
+      "find_primes_unoptimized": 0.0010619707455568042
     }
   },
   {
-    "repo_name": "emission_monitor",
-    "timestamp": "2024-11-13T06:30:33.731986",
+    "timestamp": "2025-06-09T20:48:45.903504",
     "emissions": {
-      "tests/test_bubble_sort.py": 0.00101
+      "find_primes_optimized": 0.0010035490940415845
     }
   },
   {
-    "repo_name": "sample_project_repo",
-    "timestamp": "2024-11-13T07:48:11.829174",
+    "timestamp": "2025-06-09T20:48:45.903504",
     "emissions": {
-      "tests/test_first_n_numbers_sum.py": 0.001085
+      "string_match_unoptimized": 0.0014837590729086063
     }
   },
   {
-    "repo_name": "sample_project_repo",
-    "timestamp": "2024-11-13T07:55:26.386925",
+    "timestamp": "2025-06-09T20:48:45.903504",
     "emissions": {
-      "tests/test_first_n_numbers_sum.py": 0.001001
+      "string_match_optimized": 0.0010630303314421252
+    }
+  },
+  {
+    "timestamp": "2025-06-09T20:48:45.903504",
+    "emissions": {
+      "process_data_unoptimized": 0.0023329256377819566
+    }
+  },
+  {
+    "timestamp": "2025-06-09T20:48:45.903504",
+    "emissions": {
+      "process_data_optimized": 0.0010596164222773524
+    }
+  },
+  {
+    "timestamp": "2025-06-09T20:48:45.903504",
+    "emissions": {
+      "sort_array_unoptimized": 0.0023407667038895527
+    }
+  },
+  {
+    "timestamp": "2025-06-09T20:48:45.903504",
+    "emissions": {
+      "sort_array_optimized": 0.001378004204662958
     }
   }
 ]
